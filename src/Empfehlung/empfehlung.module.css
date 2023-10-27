@@ -1,8 +1,22 @@
 .empfG {
-    font-size: 20px;
+    color: #202020;
+    cursor: default;
+    margin-top: 0px;
+    font-size: 17px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    margin-left: 3%;
+    margin-right: 3%;
 }
-.empfohleneGroesse {
-    width: 200px;
+
+.empfehlung {
+    color:#202020;
+    cursor: default;
+    font-size: 15px;
+    text-align: center;
+    font-family: 'Montserrat';
+    margin-top: 5%;
+    margin-bottom: 20%;
 }
 
 .poweredby {
@@ -37,7 +51,7 @@
     vertical-align: middle;
     width: 40%;
     font-family: 'Montserrat';
-    margin-left: 0%;
+    margin-right: 2%;
 }
 .quizSchliessen:hover,
 .quizSchliessen:focus {

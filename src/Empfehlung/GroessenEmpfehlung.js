@@ -1,11 +1,11 @@
 import styles from './empfehlung.module.css';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 function GrößenEmpfehlung({ ausgewählteAntworten, sliderValue1, sliderValue2 }) {
     const geschlecht = ausgewählteAntworten[0];
     const schultern = ausgewählteAntworten[2];
-    const größeNormal = ausgewählteAntworten[3]; // Beispielantwort, ersetze sie durch die tatsächliche Antwort
+    const größeNormal = ausgewählteAntworten[3];
+    const größeImmer = ausgewählteAntworten[4]; // Beispielantwort, ersetze sie durch die tatsächliche Antwort
     const heightValue = sliderValue1;
     const passform = sliderValue2;
 
@@ -14,6 +14,7 @@ function GrößenEmpfehlung({ ausgewählteAntworten, sliderValue1, sliderValue2 
     console.log("Größe :", heightValue);
     console.log(schultern);
     console.log(größeNormal);
+    console.log(größeImmer);
     console.log(passform);
 
     const speichereAntwortenInDatenbank = () => {
@@ -21,24 +22,18 @@ function GrößenEmpfehlung({ ausgewählteAntworten, sliderValue1, sliderValue2 
         geschlecht,
         schultern,
         größeNormal,
+        größeImmer,
         heightValue,
         passform,
         empfohleneGröße,
       };
-      axios.post('/api/speichereAntworten', antworten)
-      .then(response => {
-        console.log('Antworten erfolgreich in der Datenbank gespeichert.');
-      })
-      .catch(error => {
-        console.error('Fehler beim Speichern der Antworten: ', error);
-      });
   };
 
     // Logik für die empfohlene Größe basierend auf den Antworten
 
     let empfohleneGröße = '';
 
-    if (geschlecht === 'Männlich' && heightValue < '170' && schultern === 'schmal' && größeNormal === 'XS' &&  passform === 'Figurbetont') 
+    if (geschlecht === 'Männlich' && heightValue < '170' && schultern === 'schmal' && (größeNormal === 'XS' || größeNormal === 'S') && (größeImmer == 'Ja' || größeImmer === 'Nein, manchmal eine Größe kleiner') &&  passform === 'Figurbetont') 
     {
       empfohleneGröße = 'S';
     }
@@ -51,9 +46,9 @@ function GrößenEmpfehlung({ ausgewählteAntworten, sliderValue1, sliderValue2 
     }
 
     return (
-        <div className={styles.größenempfehlung}>
+        <div>
             <h3 className={styles.empfG}>Empfohlene Größe:</h3>
-            <p>{empfohleneGröße}</p>
+            <p className={styles.empfehlung}>{empfohleneGröße}</p>
         </div>
     );
 }

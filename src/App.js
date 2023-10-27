@@ -9,6 +9,7 @@ import Slider from './Größe/Slider';
 import SliderPassform from './Passform/SliderPassform';
 import GrößenEmpfehlung  from './Empfehlung/GroessenEmpfehlung.js';
 import styles6 from './Empfehlung/empfehlung.module.css'
+import styles35 from './GrößeImmer/frage35.module.css'
 
 function App() {
 
@@ -41,6 +42,10 @@ function App() {
         { text: 'L', klasse: styles3.antwortbuttonfrage4},
         { text: 'XL', klasse: styles3.antwortbuttonfrage4},
       ], // Hier wird die Antwort als Zahl gespeichert
+    },
+    {
+      text: 'TRÄGST DU IMMER DIESE GRÖßE',
+      antworten: [],
     },
     {
       text: 'DIESE PASSFORM BEVORZUGST DU',
@@ -76,7 +81,7 @@ function App() {
     // Füge Logik hinzu, um zur nächsten Frage zu wechseln
   
     // Bedingung für das Setzen von größe2 (Slider-Wert für Passform)
-    if (frageIndex === 4) {
+    if (frageIndex === 5) {
       let passformValue = '';
       
       switch (sliderPassValue) {
@@ -157,6 +162,15 @@ function App() {
     nächsteFrage(); // Gehe zur nächsten Frage
   };
 
+  const handle3halbeFrageAntwort = (antwort) => {
+    const neueAusgewählteAntworten = [...ausgewählteAntworten]; // Erstelle eine Kopie des aktuellen Zustands
+    neueAusgewählteAntworten[4] = antwort; // Speichere die ausgewählte Antwort in ausgewählteAntworten[3]
+    
+    setAusgewählteAntworten(neueAusgewählteAntworten); // Aktualisiere den Zustand mit der neuen Antwort
+  
+    nächsteFrage(); // Gehe zur nächsten Frage
+  }
+
   const handleSliderChange1 = (newValue) => {
     setSliderPassValue(newValue);
     // Hier können Sie die Logik hinzufügen, die Sie beim Ändern des Sliders ausführen möchten
@@ -186,7 +200,7 @@ function App() {
           <div className='quiz-container'>
             {frageIndex < fragen.length && (
               <div>
-                {frageIndex > 0 && frageIndex < 5 && (
+                {frageIndex > 0 && frageIndex < 6 && (
                   <div className='closex-backarrow'>
                     <img src='/images/back-arrow.webp' id='backarrow' onClick={zurückFrage} alt='zurück'></img>
                     <img src='/images/closeX.webp' id='closex' onClick={closeQuiz} alt='close'></img>
@@ -235,8 +249,8 @@ function App() {
                       <button className= {styles3.antwortbuttonfrage3} onClick={() => handleDritteFrageAntwort('durchschnitt')}>durchschnitt</button>
                       <button className ={styles3.antwortbuttonfrage3} onClick={() => handleDritteFrageAntwort('breit')}>breit</button>
                       <p className={styles3.poweredby}>Powered by <span className={styles3.span}>boehm.IO</span></p>
-                    </div>       
-                )}
+                    </div>
+                )}       
                 {frageIndex === 3 && (
                   <div>
                     <h1 className= {styles4.frage4}>DIESE GRÖßE TRÄGST DU NORMALWEISE</h1>
@@ -250,6 +264,16 @@ function App() {
                   </div>
                 )}
                 {frageIndex === 4 && (
+                  <div>
+                    <h1 className= {styles35.frage35}> DU TRÄGST IMMER GRÖßE {ausgewählteAntworten[3]}</h1>
+                    <button className={styles35.antwortbutton}onClick={() => handle3halbeFrageAntwort('Nein, manchmal eine Größe kleiner')}>Nein, manchmal eine Größe kleiner</button>
+                    <button className={styles35.antwortbutton}onClick={() => handle3halbeFrageAntwort('Ja')}>Ja</button>
+                    <button className={styles35.antwortbutton}onClick={() => handle3halbeFrageAntwort('Nein, manchmal eine Größe größer')}>Nein, manchmal eine Größe größer</button>
+                    <p className={styles35.poweredby}>Powered by <span className={styles35.span}>boehm.IO</span></p>
+                  </div>
+
+                )}
+                {frageIndex === 5 && (
                     <div>
                       <h1 className={styles5.frage5}>DIESE PASSFORM BEVORZUGST DU</h1>
                       <button className={styles5.nächstefragebuttonSlider2} onClick={nächsteFrage}>WEITER</button>
@@ -257,7 +281,7 @@ function App() {
                       <p className={styles5.poweredby}>Powered by <span className={styles5.span}>boehm.IO</span></p>
                     </div>
                 )}
-                {frageIndex === 5 && (
+                {frageIndex === 6 && (
                     <div>
                       <img src='/images/closeX.webp' className={` ${styles6.closex} ${styles5.alignBottom} `} onClick = {closeQuiz} alt='close'></img>
                       <GrößenEmpfehlung 
